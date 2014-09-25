@@ -197,7 +197,7 @@ vector<unsigned char> UVF::ComputeChecksum(LargeRAWFile_ptr streamFile, Checksum
               }
             } break;
     case CS_MD5 : {
-              MD5    md5;
+              tuvok::MD5    md5;
               int    iError=0;
               uint32_t iBlockSize;
 
