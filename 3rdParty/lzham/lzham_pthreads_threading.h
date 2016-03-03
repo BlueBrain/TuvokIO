@@ -12,6 +12,14 @@
 #include <semaphore.h>
 #include <unistd.h>
 
+#ifdef __APPLE__
+#   define pthread_spin_init pthread_mutex_init
+#   define pthread_spin_destroy pthread_mutex_destroy
+#   define pthread_spin_lock pthread_mutex_lock
+#   define pthread_spin_unlock pthread_mutex_unlock
+#   define pthread_spinlock_t pthread_mutex_t
+#endif
+
 namespace lzham
 {
    class semaphore
@@ -61,20 +69,9 @@ namespace lzham
          }
       }
 
-      inline bool wait(uint32 milliseconds = LZHAM_UINT32_MAX)
+      inline bool wait()
       {
-         int status;
-         if (milliseconds == LZHAM_UINT32_MAX)
-         {
-            status = sem_wait(&m_sem);
-         }
-         else
-         {
-            struct timespec interval;
-            interval.tv_sec = milliseconds / 1000;
-            interval.tv_nsec = (milliseconds % 1000) * 1000000L;
-            status = sem_timedwait(&m_sem, &interval);
-         }
+         int status = sem_wait(&m_sem);
 
          if (status)
          {

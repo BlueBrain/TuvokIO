@@ -432,12 +432,12 @@ BrickSize ComputedTargetBrickSize(BrickIndex idx, VoxelLayout voxels,
   }};
   const BrickSize no_ghost = BrickSansGhost(bsize);
   const BrickSize rv = {{
-    last[0] && (voxels[0] % no_ghost[0]) ? 4 + (voxels[0]%no_ghost[0])
-                                         : bsize[0],
-    last[1] && (voxels[1] % no_ghost[1]) ? 4 + (voxels[1]%no_ghost[1])
-                                         : bsize[1],
-    last[2] && (voxels[2] % no_ghost[2]) ? 4 + (voxels[2]%no_ghost[2])
-                                         : bsize[2]
+    size_t( last[0] && (voxels[0] % no_ghost[0]) ? 4 + (voxels[0]%no_ghost[0])
+            : bsize[0] ),
+    size_t( last[1] && (voxels[1] % no_ghost[1]) ? 4 + (voxels[1]%no_ghost[1])
+            : bsize[1] ),
+    size_t( last[2] && (voxels[2] % no_ghost[2]) ? 4 + (voxels[2]%no_ghost[2])
+            : bsize[2] )
   }};
   return rv;
 }
